@@ -7,7 +7,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
-#macos
+# my notes
+TODO.txt
+
+# macos
 .DS_Store
 
 # User-specific files
