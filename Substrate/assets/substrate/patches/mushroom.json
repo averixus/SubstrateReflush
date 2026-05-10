@@ -1,0 +1,14 @@
+﻿[
+  {
+    "file": "game:blocktypes/plant/mushroom-side.json",
+    "op": "addmerge",
+    "path": "/attributes/sporeharvestable",
+    "value": true
+  },
+  {
+    "file": "game:blocktypes/plant/mushroom.json",
+    "op": "addmerge",
+    "path": "/attributes/sporeharvestable",
+    "value": true
+  }
+]

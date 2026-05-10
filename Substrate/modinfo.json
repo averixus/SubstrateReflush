@@ -1,0 +1,13 @@
+{
+    "type": "code",
+    "modid": "substrate",
+    "name": "Substrate",
+    "authors": [
+        "Averixus", "willis81808", "MrFlame"
+    ],
+    "description": "Adds a realistic way to grow mushrooms.",
+    "version": "2.0.0",
+    "dependencies": {
+        "game": "1.22.0"
+    }
+}
