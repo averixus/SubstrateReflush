@@ -104,6 +104,8 @@
   "notice-moldy": "The substrate has <font color=\"orange\">molded</font>! Break to recycle.",
   "notice-no-available-grow-spots": "<font color=\"orange\">Lack of space to grow is causing fertility waste!</font>",
   "notice-cannot-grow-mushroom-with-block": "{0} can only grow in a {1}!",
+  "notice-requires-cellar": "Mushroom cultivation must be done in a cellar.",
+  "notice-too-bright-for-cultivation": "It is too bright for mushroom cultivation here. Light level must be {0} or lower.",
 
   "fruitingbag-insert-sporeprint": "Add Spore Print",
   "fruitingbag-insert-substrate": "Add Substrate",

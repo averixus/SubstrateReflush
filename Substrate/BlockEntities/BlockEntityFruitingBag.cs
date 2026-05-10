@@ -49,6 +49,14 @@ namespace Substrate.BlockEntities
         }
         private float _fertility = -1;
 
+        private bool RequiresCellarForCultivation => SubstrateModSystem.Config.RequireCellarForCultivation;
+        private int MaxCultivationLightLevel => SubstrateModSystem.Config.MaxCultivationLightLevel;
+        private bool IsInCellar() => CellarUtil.IsInCellar(Api, Pos);
+        private BlockPos LightCheckPos => Block is BlockGrowBed ? Pos.UpCopy() : Pos;
+        private int CurrentLightLevel => Api.World.BlockAccessor.GetLightLevel(LightCheckPos, EnumLightLevelType.MaxLight);
+        private bool IsLightLevelSuitable() => CurrentLightLevel <= MaxCultivationLightLevel;
+        private bool CanCultivateHere() => (!RequiresCellarForCultivation || IsInCellar()) && IsLightLevelSuitable();
+
         public override void Initialize(ICoreAPI api)
         {
             base.Initialize(api);
@@ -134,6 +142,12 @@ namespace Substrate.BlockEntities
         {
             if (Api.Side != EnumAppSide.Server || !Inoculated) return;
 
+            if (!CanCultivateHere())
+            {
+                _lastColonizeProgressTimestamp = 0;
+                return;
+            }
+
             if (Fertility <= 0)
             {
                 _inoculatedMushroom = null;
@@ -209,6 +223,19 @@ namespace Substrate.BlockEntities
                 return false;
             }
 
+            if (!CanCultivateHere())
+            {
+                if (Api is ICoreClientAPI capi)
+                {
+                    var errorCode = !IsLightLevelSuitable() ? "requires-darkness" : "requires-cellar";
+                    var message = !IsLightLevelSuitable()
+                        ? Lang.Get("substrate:notice-too-bright-for-cultivation", MaxCultivationLightLevel)
+                        : Lang.Get("substrate:notice-requires-cellar");
+                    capi.TriggerIngameError(this, errorCode, message);
+                }
+                return false;
+            }
+
             _inoculatedMushroom = mushroomVariant;
             _colonizeDuration = NextColonizeIncrement();
 
@@ -250,6 +277,10 @@ namespace Substrate.BlockEntities
                 dsc.AppendLine(Lang.Get("substrate:fruitingbag-remaining-fertility", Fertility / MaxFertility * 100));
                 if (GetOpenFaceCount() == 0)
                     dsc.AppendLine(Lang.Get("substrate:notice-no-available-grow-spots"));
+                if (RequiresCellarForCultivation && !IsInCellar())
+                    dsc.AppendLine(Lang.Get("substrate:notice-requires-cellar"));
+                if (!IsLightLevelSuitable())
+                    dsc.AppendLine(Lang.Get("substrate:notice-too-bright-for-cultivation", MaxCultivationLightLevel));
             }
             else
             {
