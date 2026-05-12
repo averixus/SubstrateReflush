@@ -1,6 +1,6 @@
 # Substrate
 
-A Mushroom Cultivation Mod for Vintage Story
+A Mushroom Cultivation Mod for Vintage Story. Details and releases: https://mods.vintagestory.at/substrate
 
 ## Features
 
@@ -53,4 +53,4 @@ A Mushroom Cultivation Mod for Vintage Story
 
 ## Credits
 
-Special thanks to the Vintage Story modding community for inspiration and feedback!
+Originally written by Reid Willis (Queerty / Willis 81808). Updated for Vintage Story 1.22 by Avery Rowe (Averixus). Special thanks to the Vintage Story modding community for inspiration and feedback!
